@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brand</title>
+
+    <style>
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <template>
+        <el-table
+                :data="tableData"
+                style="width: 30%"
+                :row-class-name="tableRowClassName">
+            <el-table-column
+                    prop="username"
+                    label="账号"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="password"
+                    label="密码"
+                    align="center">
+            </el-table-column>
+        </el-table>
+
+    </template>
+</div>
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script src="js/axios-0.18.0.js"></script>
+
+<script>
+
+    new Vue({
+        el: "#app",
+        mounted() {
+            this.selectAll();
+        },
+        methods: {
+            selectAll() {
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/brand-case/selectAllUser",
+                }).then(resp => {
+                    this.tableData = resp.data;
+                })
+            },
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex === 0) {
+                    return 'warning-row';
+                } else if (rowIndex === 2) {
+                    return 'success-row';
+                }
+                return '';
+            }
+        },
+        data() {
+            return {
+                user: {
+                    username: '',
+                    password: ''
+                },
+                tableData: [],
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

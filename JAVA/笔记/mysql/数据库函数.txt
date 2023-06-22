@@ -1,0 +1,172 @@
+数据库函数
+一、MySQL提供了实现各种功能的函数
+（一）、常用的函数分类
+1数学函数
+2聚合函数
+3字符串函数
+4日期时间函数
+
+1.1数学函数
+
+1、常用的数学函数
+2、abs(x) 返回x的绝对值
+3、rand() 返回0到1的随机数
+4、mod(x,y) 返回x除以y以后的余数
+5、power(x,y)返回x的y次方
+6、round(x) 返回离x最近的整数
+7、round(x,y) 保留x的y位小数四舍五入后的值
+8、sqrt(x) 返回x的平方根
+9、truncate(x,y) 返回数字x截断为y位小数的值
+10、ceil(x)返回大于或等于x的最小整数
+11、floor(x) 返回小于或等于x的最大整数
+12、greatest(x1,2…) 返回集合中最大的值
+13、least(x1,2…) 返回集合中最小的值
+
+1.2聚合函数
+
+对表中数据记录进行集中概括而设计的一类函数
+常用的聚合函数
+1、avg()返回指定列的平均值
+2、count()返回指定列中非NULL值的个数
+3、min()返回指定列的最小值
+4、max()返回指定列的最大值
+5、sum()返回指定列的所有值之和
+
+1.3字符串函数
+
+常用的字符串函数
+1、length(x) 返回字符串x的长度
+2、trim() 返回去除指定格式的值
+3、concat(x,y)将提供的参数x和y拼接成一个字符串
+4、upper(x)将字符串x的所有字母变成大写字母
+5、lower(x)将字符串x的所有字母变成小写字母
+left(x,y)返回字符串x的前y个字符
+6、right(x,y)返回字符串x的后y个字符
+7、repeat(x,y)将字符串x重复y次
+8、space(x) 返回x个空格
+9、replace(x,y,z)将字符串z替代字符串x中的字符串y
+10、strcmp(x,y) 比较x和y,返回的值可以为-1,0,1
+11、substring(x,y,z)获取从字符串x中的第y个位置开始长度为z的字符串
+12、reverse(x)将字符串x反转
+
+1.4日期时间函数
+
+常用的日期时间函数
+1、curdate() 返回当前时间的年月日
+2、curtime()返回当前时间的时分秒
+3、now() 返回当前时间的日期和时间
+4、month(x) 返回日期x中的月份值
+5、week(x) 返回日期x是年度第几个星期
+6、hour(x)返回x中的小时值
+7、minute(x) 返回x中的分钟值
+8、second(x)返回x中的秒钟值
+9、dayofweek(x)返回x是星期几，1星期日，2星期一
+10、dayofmonth(x) 计算日期x是本月的第几天
+11、dayofyear(x) 计算日期x是本年的第几天
+
+二.存储过程简介
+
+是一组为了完成特定功能的SQL语句集合
+比传统SQL速度更快、执行效率更高
+    存储过程的优点
+执行一次后，会将生成的二-进制代码驻留缓冲区，提高执行效率
+    SQL语句加上控制语句的集合，灵活性高
+
+在服务器端存储，客户端调用时，降低网络负载
+  可多次重复被调用，可随时修改，不影响客户端调用
+  可完成所有的数据库操作，也可控制数据库的信息访问权限
+
+创建存储过程3-1
+
+使用CREATE PROCEDURE语句创建存储过程
+创建存储过程的语法结构尽量避免 与内置的函数或字段重名
+
+CREATE PROCEDURE <过程名> ( [过程参数[..1]) <过程体>
+
+[过程参数[,..]]格式
+
+[ IN | OUT | INOUT] <参数名> <类型>
+
+参数分为
+1、输入参数: IN
+2、输出参数: OUT
+3、输入/输出参数: INOUT
+
+创建存储过程3-2
+
+存储过程的主体部分，被称为过程体
+以BEGIN开始，以END结束，若只有一条SQL语句,
+则可以省略BEGIN-END
+以DELIMITER开始和结束
+
+mysql> DELIMITER $$  /$$是用户自定义的结束符
+
+//省略存储过程其他步骤
+
+mysq|l> DELIMITER ;   //分号前有空格
+
+创建存储过程3-3
+
+不带参数的存储过程
+
+mysq|> DELIMITER[$$中
+
+mysql> CREATE PROCEDURE PlayerRole()
+
+-> BEGIN
+
+-> SELECT id,name,level from player limit 3;
+
+-> END $$
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+
+mysq|> call PlayerRole();
+
+|id|name
+
+| level |
+
+---------------------+
+
+|1|修欧拉卡|10|
+
+| 2 |起风了|10 |
+
+|3|吊打低V|15|
+
++---------------------+
+
+3 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+带参数的存储过程
+
+mysq|> DELIMITER $$
+
+mysq|> CREATE PROCEDURE GetRole(Ninname VARCHAR(16)
+
+-> BEGIN
+
+-> SELECT id,name.level from player where name=inname;
+
+-> ENDS$
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER ;
+
+mysql> call GetRole( hirley');
+
+----------------+-
+
+| id |name| level |
+
+|2460|shirley|1|
+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)

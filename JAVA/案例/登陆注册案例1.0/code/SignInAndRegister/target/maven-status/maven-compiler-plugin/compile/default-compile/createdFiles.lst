@@ -1,0 +1,5 @@
+com\wsleli\pojo\User.class
+com\wsleli\web\RegisterServlet.class
+com\wsleli\web\LoginServlet.class
+com\wsleli\mapper\UserMapper.class
+com\wsleli\util\SqlSessionFactoryUtils.class

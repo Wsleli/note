@@ -1,0 +1,16 @@
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\pojo\User.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\service\UserService.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\CheckCodeServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\util\SqlSessionFactoryUtils.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\LoginServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\AddServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\DeleteByIdServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\SelectAllServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\service\BrandService.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\mapper\BrandMapper.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\SelectByIdServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\mapper\UserMapper.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\UpdateServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\web\RegisterServlet.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\pojo\Brand.java
+E:\Aportfolio\code\Idea_WorkHome\SignInAndRegister\src\main\java\com\wsleli\util\CheckCodeUtil.java

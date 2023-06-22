@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brand</title>
+
+    <style>
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <template>
+        <!--搜索表单-->
+        <el-form :inline="true" :model="brand_search" class="demo-form-inline">
+            <el-form-item label="当前状态">
+                <el-select v-model="brand_search.status" placeholder="当前状态">
+                    <el-option label="启用" value="1"></el-option>
+                    <el-option label="禁用" value="0"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="品牌名称">
+                <el-input v-model="brand_search.brandName" placeholder="品牌名称"></el-input>
+            </el-form-item>
+            <el-form-item label="企业名称">
+                <el-input v-model="brand_search.companyName" placeholder="企业名称"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="danger" @click="reset">重置</el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="danger" @click="logout" round>注销登录</el-button>
+            </el-form-item>
+        </el-form>
+        <!--操作-->
+        <el-row>
+            <el-button type="primary" plain @click="dialogVisible1 = true">新增</el-button>
+        </el-row>
+        <!--添加表单-->
+        <el-dialog
+                title="新增品牌"
+                :visible.sync="dialogVisible1"
+                width="30%">
+
+            <el-form ref="form" :model="brand_add" label-width="80px">
+                <el-form-item label="品牌名称">
+                    <el-input v-model="brand_add.brandName"></el-input>
+                </el-form-item>
+                <el-form-item label="企业名称">
+                    <el-input v-model="brand_add.companyName"></el-input>
+                </el-form-item>
+                <el-form-item label="排序">
+                    <el-input v-model="brand_add.ordered"></el-input>
+                </el-form-item>
+                <el-form-item label="备注">
+                    <el-input type="textarea" v-model="brand_add.description"></el-input>
+                </el-form-item>
+                <el-form-item label="状态">
+                    <el-tooltip :content="brand_add.status === '1' ? '启用' : '禁用'" placement="top">
+                        <el-switch v-model="brand_add.status"
+                                   active-value='1'
+                                   inactive-value='0'
+                        ></el-switch>
+                    </el-tooltip>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="addBrand">提交</el-button>
+                    <el-button @click="dialogVisible1 = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+        <!--数据展示-->
+        <el-table
+                :data="tableData"
+                style="width: 100%"
+                :row-class-name="tableRowClassName"
+                @selection-change="handleSelectionChange"
+                @row-click="onRowClick">
+            <el-table-column
+                    type="index"
+                    width="50">
+            </el-table-column>
+            <el-table-column
+                    prop="brandName"
+                    label="品牌名称"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="companyName"
+                    label="企业名称"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="ordered"
+                    label="排序"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="statusStr"
+                    label="当前状态"
+                    align="center">
+                <!--                <template slot-scope="scope">-->
+                <!--                    {{ scope.row.status === 1 ? '启用' : '禁用' }}-->
+                <!--                </template>-->
+            </el-table-column>
+        </el-table>
+        <!--分页工具条-->
+        <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="brand_select.currentPage"
+                :page-sizes="[5, 10, 15, 20]"
+                :page-size="brand_select.pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalCount">
+        </el-pagination>
+    </template>
+</div>
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script src="js/axios-0.18.0.js"></script>
+
+<script>
+
+    new Vue({
+        el: "#app",
+        //初始化
+        mounted() {
+            this.selectAll();
+        },
+        methods: {
+            //注销登录
+            logout() {
+                fetch("http://localhost:8080/brand-case/logout") // 向服务器发送注销请求
+                    .then(resp => {
+                        if (resp.ok) {
+                            // 注销成功，重定向到登录页面
+                            window.location.href = "/brand-case/login.jsp";
+                        } else {
+                            // 处理注销失败的情况
+                        }
+                    })
+                    .catch(error => {
+                        // 处理请求错误的情况
+                    });
+            },
+            //分页查询所有数据
+            /*
+            selectAll() {
+                var _this = this;
+
+                // console.log(this.brand_select);
+
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/brand-case/brand/selectByPage",
+                    data: _this.brand_select
+                }).then(function (resp) {
+                    _this.tableData = resp.data.rows;
+                    _this.totalCount = resp.data.totalCount;
+                })
+            },*/
+            selectAll() {
+                this.brand_search_req[0] = this.brand_search;
+                this.brand_search_req[1] = this.brand_select;
+
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/brand-case/brand/selectByPageAndCondition",
+                    data: this.brand_search_req
+                }).then(resp => {
+                    this.tableData = resp.data.rows;
+                    this.totalCount = resp.data.totalCount;
+                })
+            },
+            // row.index = rowIndex;
+            tableRowClassName({row, rowIndex}) {
+                row.index = rowIndex;
+            },
+            //点击数据行后执行
+            onRowClick(row) {
+                const {id, brandName, companyName, ordered, description, status} = row;
+                this.brand_update = {id, brandName, companyName, ordered, description, status};
+                // 或者
+                /*
+                const properties = brand_update所有属性构成的集合;
+                properties.forEach(prop => {
+                    this.brand_update[prop] = row[prop];
+                });*/
+
+                this.brand_delete.id = row.id;
+            },
+            //复选框选择后执行
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+                // console.log(this.multipleSelection);
+            },
+            //重置方法
+            reset() {
+                // 清空表单中的数据
+                for (const i in this.brand_search) {
+                    this.brand_search[i] = '';
+                }
+
+                // this.$message({
+                //     showClose: true,
+                //     message: '重置成功！',
+                //     type: 'success',
+                //     center: true
+                // });
+            },
+            //查询方法
+            /*
+            onSubmit() {
+
+                // console.log(this.brand_search);
+                var _this = this;
+
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/brand-case/brand/search",
+                    data: _this.brand_search
+                }).then(function (resp) {
+                    _this.tableData = resp.data;
+
+                    if (resp.data === "error") {
+                        _this.$message({
+                            showClose: true,
+                            message: '请输入完整！',
+                            type: 'error',
+                            center: true
+                        });
+
+                        _this.selectAll();
+                    } else {
+                        _this.$message({
+                            showClose: true,
+                            message: '查询成功！',
+                            type: 'success',
+                            center: true
+                        });
+                    }
+                })
+            }, */
+            onSubmit() {
+                this.brand_search_req[0] = this.brand_search;
+                this.brand_select.currentPage = 1;
+                this.brand_search_req[1] = this.brand_select;
+
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/brand-case/brand/selectByPageAndCondition",
+                    data: this.brand_search_req
+                }).then(resp => {
+                    this.tableData = resp.data.rows;
+                    this.totalCount = resp.data.totalCount;
+                })
+            },
+            //添加数据
+            addBrand() {
+                // console.log(this.brand_add);
+                //发送ajax请求，添加数据
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/brand-case/brand/add",
+                    data: this.brand_add
+                }).then(resp => {
+                        if (resp.data === "success") {
+                            this.dialogVisible1 = false;
+
+                            // 清空新增品牌表单中的数据
+                            for (const i in this.brand_add) {
+                                this.brand_add[i] = '';
+                            }
+
+                            this.$message({
+                                showClose: true,
+                                message: '提交成功！',
+                                type: 'success',
+                                center: true
+                            });
+
+                            this.selectAll();
+                        } else {
+                            this.$message({
+                                showClose: true,
+                                message: '请输入完整！',
+                                type: 'error',
+                                center: true
+                            });
+                        }
+                    }
+                )
+            },
+            //分页
+            handleCurrentChange(val) {
+                // console.log(`当前页: ${val}`);
+                this.brand_select.currentPage = val;
+                this.selectAll();
+            },
+            handleSizeChange(val) {
+                // console.log(`每页 ${val} 条`);
+                this.brand_select.pageSize = val;
+                this.selectAll();
+            },
+        },
+        data() {
+            return {
+                //选择器
+                options: [{
+                    S_value: '1',
+                    label: '启用'
+                }, {
+                    S_value: '0',
+                    label: '禁用'
+                }],
+                S_value: '',
+                //总条数
+                totalCount: 0,
+                //对话框是否展示
+                dialogVisible1: false,
+                dialogVisible2: false,
+                //品牌模型数据
+                brand_search: {
+                    status: '',
+                    brandName: '',
+                    companyName: '',
+                    id: '',
+                    ordered: '',
+                    description: '',
+                },
+                brand_search_req: [2],
+                brand_add: {
+                    status: '',
+                    brandName: '',
+                    companyName: '',
+                    id: '',
+                    ordered: '',
+                    description: ''
+                },
+                brand_select: {
+                    currentPage: 1,
+                    pageSize: 5,
+                },
+                //表格数据
+                tableData: []
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

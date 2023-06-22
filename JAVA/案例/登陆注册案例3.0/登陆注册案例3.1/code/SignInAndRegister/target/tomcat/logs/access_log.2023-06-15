@@ -1,0 +1,16 @@
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:32:21 +0800] "GET /SignInAndRegister HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:32:21 +0800] "GET /SignInAndRegister/ HTTP/1.1" 200 931 http-bio-8080-exec-3 343
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:32:21 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-4 0
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:32:43 +0800] "GET /SignInAndRegister/index.html HTTP/1.1" 200 931 http-bio-8080-exec-5 3
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:33:35 +0800] "GET /SignInAndRegister/index.html HTTP/1.1" 200 931 http-bio-8080-exec-7 2
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:33:35 +0800] "GET /SignInAndRegister/css/login.css HTTP/1.1" 200 931 http-bio-8080-exec-9 3
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:33:35 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-10 0
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:33:58 +0800] "GET /SignInAndRegister/css/login.css HTTP/1.1" 200 931 http-bio-8080-exec-3 1
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:34:04 +0800] "GET /SignInAndRegister/index.html HTTP/1.1" 200 931 http-bio-8080-exec-3 1
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:34:04 +0800] "GET /SignInAndRegister/css/login.css HTTP/1.1" 200 931 http-bio-8080-exec-3 1
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:38:47 +0800] "GET /SignInAndRegister/index.html HTTP/1.1" 200 931 http-bio-8080-exec-1 45
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:38:47 +0800] "GET /SignInAndRegister/css/login.css HTTP/1.1" 200 1934 http-bio-8080-exec-3 3
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:38:47 +0800] "GET /SignInAndRegister/imgs/Desert1.jpg HTTP/1.1" 200 1631571 http-bio-8080-exec-4 8
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:39:07 +0800] "POST /SignInAndRegister/loginServlet HTTP/1.1" 200 937 http-bio-8080-exec-5 299
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:39:12 +0800] "POST /SignInAndRegister/loginServlet HTTP/1.1" 302 - http-bio-8080-exec-6 5
+0:0:0:0:0:0:0:1 - - [15/Jun/2023:20:39:13 +0800] "GET /SignInAndRegister/selectAllServlet HTTP/1.1" 200 2212 http-bio-8080-exec-7 328
