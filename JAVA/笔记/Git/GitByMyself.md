@@ -49,7 +49,6 @@ git status –s
 git add  <文件名>  
 # 将暂存区的文件取消暂存 (取消 add )
 git reset  <文件名>  
-
 ```
 
 ##commit
@@ -81,7 +80,7 @@ git remote  -v
 git remote show  <仓库简称>
 ```
 
-## 添加/移除远测仓库
+## 添加/移除远测仓库（绑定的链接）
 
 ```shell
 # 添加远程仓库
@@ -140,7 +139,7 @@ git merge <分支名称>
 git push origin –d branchName
 ```
 
-# 命令行 --tag
+# 命令行 --tag（标签）
 
 ```shell
 # 列出所有tag
@@ -152,11 +151,11 @@ git tag [tagName]
 # 提交指定tag
 $ git push [仓库简称] [tagName]
 # 新建一个分支，指向某个tag
-$ git checkout -b [branch] [tag]
+$ git checkout -b [branchName] [tagName]
 # 删除本地tag
-$ git tag -d [tag]
+$ git tag -d [tagName]
 # 删除远程tag (注意 空格)
-$ git push origin :refs/tags/[tag]
+$ git push origin :refs/tags/[tagName]
 ```
 
 # 忽略文件
@@ -189,3 +188,7 @@ ssh-keygen -t rsa
  一直回车即可
 
  会默认用户目录 .ssh 目录生成一个默认的id_rsa（私钥）文件 和id_rsa.pub（公钥）
+
+TortoiseGit可视化工具需要配置网络，路径为`*\Git\usr\bin\ssh.exe`
+
+git站点配置公钥
