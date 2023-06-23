@@ -14,6 +14,8 @@
     git config user.email
 #通过上面的命令设置的信息会保存在~/.gitconfig文件中
 #q 退出
+#查看日志
+	git log
 ```
 
 ##初始化本地仓库 init
